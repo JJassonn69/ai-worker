@@ -11,7 +11,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/jjassonn69/ai-worker/worker"
+	"github.com/livepeer/ai-worker/worker"
 	"github.com/oapi-codegen/runtime/types"
 )
 
