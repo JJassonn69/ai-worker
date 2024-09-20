@@ -17,8 +17,8 @@ async def lifespan(app: FastAPI):
 
     app.include_router(health.router)
 
-    pipeline = os.environ.get("PIPELINE", "")  # Default to 
-    model_id = os.environ.get("MODEL_ID", "")  # Provide a default if necessary
+    pipeline = os.environ.get("PIPELINE", "") 
+    model_id = os.environ.get("MODEL_ID", "")
 
     app.pipeline = load_pipeline(pipeline, model_id)
     app.include_router(load_route(pipeline))
@@ -46,10 +46,8 @@ def load_pipeline(pipeline: str, model_id: str) -> any:
             from app.pipelines.audio_to_text import AudioToTextPipeline
 
             return AudioToTextPipeline(model_id)
-        case "FILMPipeline":
-            from app.pipelines.frame_interpolation import FILMPipeline
-
-            return FILMPipeline(model_id)
+        case "frame-interpolation":	
+            raise NotImplementedError("frame-interpolation pipeline not implemented")
         case "upscale":
             from app.pipelines.upscale import UpscalePipeline
 
@@ -82,10 +80,8 @@ def load_route(pipeline: str) -> any:
             from app.routes import audio_to_text
 
             return audio_to_text.router
-        case "FILMPipeline":
-            from app.routes import frame_interpolation
-
-            return frame_interpolation.router
+        case "frame-interpolation":	
+            raise NotImplementedError("frame-interpolation pipeline not implemented")
         case "upscale":
             from app.routes import upscale
 

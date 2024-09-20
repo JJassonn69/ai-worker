@@ -19,8 +19,6 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 logger = logging.getLogger(__name__)
 
-SFAST_WARMUP_ITERATIONS = 2  # Model warm-up iterations when SFAST is enabled.
-
 
 class ImageToVideoPipeline(Pipeline):
     def __init__(self, model_id: str):
@@ -96,7 +94,7 @@ class ImageToVideoPipeline(Pipeline):
                         "Warmup iteration %s took %s seconds", ii + 1, iteration_time
                     )
                 logger.info("Total warmup time: %s seconds", total_time)
-
+                
         if deepcache_enabled:
             logger.info(
                 "TextToImagePipeline will be optimized with DeepCache for %s",
