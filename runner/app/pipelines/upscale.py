@@ -73,10 +73,10 @@ class UpscalePipeline(Pipeline):
                 # TODO: Retrieve defaults from Pydantic class in route.
                 warmup_kwargs = {
                     "prompt": "Upscaling the pipeline with sfast enabled",
-                    "image": PIL.Image.new("RGB", (576, 1024)),
+                    "image": PIL.Image.new("RGB", (400, 400)), # anything higher than this size cause the model to OOM
                 }
 
-                logger.info("Warming up ImageToVideoPipeline pipeline...")
+                logger.info("Warming up Upscale pipeline...")
                 total_time = 0
                 for ii in range(SFAST_WARMUP_ITERATIONS):
                     t = time.time()
@@ -84,7 +84,7 @@ class UpscalePipeline(Pipeline):
                         self.ldm(**warmup_kwargs).images
                     except Exception as e:
                         # FIXME: When out of memory, pipeline is corrupted.
-                        logger.error(f"ImageToVideoPipeline warmup error: {e}")
+                        logger.error(f"Upscale pipeline warmup error: {e}")
                         raise e
                     iteration_time = time.time() - t
                     total_time += iteration_time
